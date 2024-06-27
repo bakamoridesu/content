@@ -1,7 +1,9 @@
-package main
+package manager
+
+import "nocompiler/logger"
 
 type Processable interface {
-	Process(config map[string]string, logger Logger)
+	Process(config map[string]string, logger logger.ILogger)
 }
 
 type EntityManager[T Processable] struct {
@@ -9,7 +11,7 @@ type EntityManager[T Processable] struct {
 	entities []T
 }
 
-func NewEntityManager[T Processable](process func(T) error) *EntityManager[T] {
+func New[T Processable](process func(T) error) *EntityManager[T] {
 	return &EntityManager[T]{
 		process: process,
 	}
